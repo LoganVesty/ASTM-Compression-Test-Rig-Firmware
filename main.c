@@ -28,7 +28,6 @@ char force_string[8];
 float force;
 int zero_position_counts;
 int step_pwm_cycle_time;
-int hello;
 
 
 
