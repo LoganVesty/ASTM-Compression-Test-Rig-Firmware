@@ -1,0 +1,3 @@
+C:/Users/logan/Documents/Projects/Shipping Test/Compression Rig/Compression Rig Firmware git/ASTM-Compression-Test-Rig/build/pioasm/CMakeFiles/pioasm.dir
+C:/Users/logan/Documents/Projects/Shipping Test/Compression Rig/Compression Rig Firmware git/ASTM-Compression-Test-Rig/build/pioasm/CMakeFiles/edit_cache.dir
+C:/Users/logan/Documents/Projects/Shipping Test/Compression Rig/Compression Rig Firmware git/ASTM-Compression-Test-Rig/build/pioasm/CMakeFiles/rebuild_cache.dir
