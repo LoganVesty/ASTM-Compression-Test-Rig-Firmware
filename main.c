@@ -4,7 +4,7 @@ This firware uses modified example codes from the raspberry pi pico git, refer b
 https://github.com/raspberrypi/pico-examples/tree/master/pio/quadrature_encoder
 https://github.com/raspberrypi/pico-examples/blob/master/uart/uart_advanced/uart_advanced.c
  */
-
+//Test 4
 //Header Files
 #include <stdio.h>
 #include "pico/stdlib.h"
