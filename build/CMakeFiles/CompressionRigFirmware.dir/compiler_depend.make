@@ -992,7 +992,8 @@ CMakeFiles/CompressionRigFirmware.dir/C_/VSARM/sdk/pico/pico-sdk/lib/tinyusb/src
   C:/VSARM/sdk/pico/pico-sdk/lib/tinyusb/src/device/usbd.h \
   C:/VSARM/sdk/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.h \
   C:/VSARM/sdk/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc.h \
-  C:/VSARM/sdk/pico/pico-sdk/lib/tinyusb/src/device/usbd_pvt.h
+  C:/VSARM/sdk/pico/pico-sdk/lib/tinyusb/src/device/usbd_pvt.h \
+  C:/VSARM/armcc/10\ 2021.10/arm-none-eabi/include/ctype.h
 
 CMakeFiles/CompressionRigFirmware.dir/C_/VSARM/sdk/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj: C:/VSARM/sdk/pico/pico-sdk/src/common/pico_sync/critical_section.c \
   C:/VSARM/sdk/pico/pico-sdk/src/common/pico_sync/include/pico/critical_section.h \
@@ -3235,6 +3236,10 @@ C:/VSARM/armcc/10\ 2021.10/arm-none-eabi/include/stdlib.h:
 
 C:/VSARM/armcc/10\ 2021.10/arm-none-eabi/include/machine/stdlib.h:
 
+C:/VSARM/sdk/pico/pico-sdk/src/common/pico_util/include/pico/util/queue.h:
+
+C:/VSARM/armcc/10\ 2021.10/arm-none-eabi/include/ctype.h:
+
 C:/VSARM/sdk/pico/pico-sdk/src/common/pico_sync/critical_section.c:
 
 C:/VSARM/sdk/pico/pico-sdk/src/common/pico_sync/lock_core.c:
@@ -3266,8 +3271,6 @@ C:/VSARM/sdk/pico/pico-sdk/src/common/pico_util/include/pico/util/datetime.h:
 C:/VSARM/sdk/pico/pico-sdk/src/common/pico_util/pheap.c:
 
 C:/VSARM/sdk/pico/pico-sdk/src/common/pico_util/queue.c:
-
-C:/VSARM/sdk/pico/pico-sdk/src/common/pico_util/include/pico/util/queue.h:
 
 C:/VSARM/sdk/pico/pico-sdk/src/rp2_common/pico_stdio/include/pico/stdio/driver.h:
 

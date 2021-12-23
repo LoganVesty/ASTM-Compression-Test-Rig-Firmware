@@ -1,8 +1,11 @@
+#ifndef MAIN_H
+#define MAIN_H
+
 //Function Declaration
 void start_test(double preload, double load);
-void outputValues(uint32_t time, bool testRunning);
+void output_values(uint32_t time, bool testRunning);
 long map(long x, long in_min, long in_max, long out_min, long out_max);
-void commandHandler(int ch);
+void command_handler(int ch);
 void on_uart1_rx();
 void core1_main();
 
@@ -23,11 +26,12 @@ void core1_main();
 #define ENCODER_PIO pio0
 
 //Global Variable 
-extern char force_string[8];
-extern float force;
-extern int zero_position_counts;
-extern int step_pwm_cycle_time; //This will be varied for motor speed control
+extern char g_force_string[8];
+extern float g_force;
+extern int g_zero_position_counts;
+extern int g_step_pwm_cycle_time; //This will be varied for motor speed control
 
+#endif /* GRANDPARENT_H */
 
 
 

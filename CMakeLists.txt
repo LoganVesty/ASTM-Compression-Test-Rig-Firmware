@@ -27,7 +27,6 @@ pico_add_extra_outputs(${PROJECT_NAME})
 
 # Link to the pico_stdlib (gpio, time, etc. functions)
 target_link_libraries(${PROJECT_NAME} 
-
     pico_stdlib
     pico_multicore
     hardware_pio

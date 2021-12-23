@@ -1012,6 +1012,7 @@ CMakeFiles/CompressionRigFirmware.dir/C_/VSARM/sdk/pico/pico-sdk/lib/tinyusb/src
  C:/VSARM/sdk/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.h
  C:/VSARM/sdk/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc.h
  C:/VSARM/sdk/pico/pico-sdk/lib/tinyusb/src/device/usbd_pvt.h
+ C:/VSARM/armcc/10 2021.10/arm-none-eabi/include/ctype.h
 
 CMakeFiles/CompressionRigFirmware.dir/C_/VSARM/sdk/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj
  C:/VSARM/sdk/pico/pico-sdk/src/common/pico_sync/critical_section.c
