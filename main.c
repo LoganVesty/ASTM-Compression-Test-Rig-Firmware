@@ -1,5 +1,5 @@
 /**
-Compression Rig Firmware.
+Compression Rig Firmware. test
 This firware uses modified example codes from the raspberry pi pico git, refer bellow
 https://github.com/raspberrypi/pico-examples/tree/master/pio/quadrature_encoder
 https://github.com/raspberrypi/pico-examples/blob/master/uart/uart_advanced/uart_advanced.c
@@ -28,6 +28,7 @@ char force_string[8];
 float force;
 int zero_position_counts;
 int step_pwm_cycle_time;
+int hello;
 
 
 
