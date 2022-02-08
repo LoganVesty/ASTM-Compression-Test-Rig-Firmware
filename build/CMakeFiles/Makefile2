@@ -1325,8 +1325,8 @@ pico-sdk/tools/clean:
 # Target rules for target CMakeFiles/CompressionRigFirmware.dir
 
 # All Build rule for target.
-CMakeFiles/CompressionRigFirmware.dir/all: CMakeFiles/CompressionRigFirmware_quadrature_encoder_pio_h.dir/all
 CMakeFiles/CompressionRigFirmware.dir/all: CMakeFiles/ELF2UF2Build.dir/all
+CMakeFiles/CompressionRigFirmware.dir/all: CMakeFiles/CompressionRigFirmware_quadrature_encoder_pio_h.dir/all
 CMakeFiles/CompressionRigFirmware.dir/all: pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_padded_checksummed_asm.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CompressionRigFirmware.dir\build.make CMakeFiles/CompressionRigFirmware.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CompressionRigFirmware.dir\build.make CMakeFiles/CompressionRigFirmware.dir/build
