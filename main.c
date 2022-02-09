@@ -45,13 +45,14 @@ char g_force_string[8];
 float g_force;
 int g_zero_position_counts;
 int g_step_pwm_cycle_time;
-double g_preload = 0.0;
-double g_load = 0.0;
+float g_preload = 0.0;
+float g_load = 0.0;
 uint32_t g_start_time_ms;
 uint32_t g_preload_start_time;
 uint32_t g_load_start_time;
 enum states state = STATE_IDLE;
 struct repeating_timer get_commands_timer;
+
 
 //Main Entry Point, Core 0
 int main() {
@@ -97,11 +98,12 @@ int main() {
 
 bool get_command(struct repeating_timer *t)
 {
-    //Get commands from serial
-    int command = getchar_timeout_us(100);
-    if (command != PICO_ERROR_TIMEOUT)
+    if(state != STATE_PRE_TEST)
     {
-        command_handler(command);
+        //Get commands from serial
+        int command = getchar_timeout_us(10);
+        if (command != PICO_ERROR_TIMEOUT)
+            command_handler(command);
     }
 }
 
@@ -109,6 +111,7 @@ void state_machine()
 {
     switch (state)
     {
+    
     case STATE_IDLE:
         //Continually send force and position data to app
         output_values(0,0);
@@ -118,7 +121,7 @@ void state_machine()
     case STATE_STARTING:
         g_start_time_ms = to_ms_since_boot(get_absolute_time());
         //Start Motor Down
-        pwm_set_wrap(STEP_PWM_SLICE, 65535);
+        pwm_set_wrap(STEP_PWM_SLICE, TEST_SPEED);
         gpio_put(STEP_DIR_PIN, 0);
         pwm_set_enabled(STEP_PWM_SLICE, true);
         state = STATE_PRELOADING;
@@ -137,7 +140,7 @@ void state_machine()
     
     case STATE_PRELOAD_DELAY:
         output_values(to_ms_since_boot(get_absolute_time())-g_start_time_ms, 1);
-        if(g_preload_start_time - to_ms_since_boot(get_absolute_time()) >= PRELOAD_DELAY)
+        if(to_ms_since_boot(get_absolute_time()) - g_preload_start_time >= PRELOAD_DELAY)
         {
 
             //Start Motor
@@ -159,7 +162,7 @@ void state_machine()
 
     case STATE_LOAD_DELAY:
         output_values(to_ms_since_boot(get_absolute_time())-g_start_time_ms, 1);
-        if(g_load_start_time - to_ms_since_boot(get_absolute_time()) >= LOAD_DELAY)
+        if(to_ms_since_boot(get_absolute_time()) - g_load_start_time >= LOAD_DELAY)
         {
             //Move Motor Up
             gpio_put(STEP_DIR_PIN, 1);
@@ -170,7 +173,7 @@ void state_machine()
 
     case STATE_FINISHING:
         output_values(to_ms_since_boot(get_absolute_time())-g_start_time_ms, 1);
-        if(g_force*1000 < 50)
+        if(g_force*1000 < 5)
         {
             pwm_set_enabled(STEP_PWM_SLICE, false);
             state = STATE_QUITTING;
@@ -187,6 +190,50 @@ void state_machine()
         g_preload_start_time = 0;
         g_load_start_time = 0;
         state = STATE_IDLE;
+        break;
+
+    case STATE_PRE_TEST:;
+
+        char preloadArr[7] = {0};
+        //float preload;
+        char loadArr[7] = {0};
+        //float load;
+        char ch;
+        
+        //First get preload value
+        for (int i = 0; i < 6; i++)
+        {
+            preloadArr[i]= getchar();
+            //Getting garbage sometimes, only want number or period
+            while ((preloadArr[i] < '0' && preloadArr[i]!= '.') || preloadArr[i] > '9' )
+            {
+                preloadArr[i]= getchar(); 
+                if (preloadArr[i]=PICO_ERROR_TIMEOUT) break;
+            }
+        }
+        //Then get load value
+        for (int i = 0; i < 6; i++)
+        {
+            loadArr[i]= getchar();
+            //Getting garbage sometimes, only want number or period
+            while ((loadArr[i] < '0'&& loadArr[i]!= '.')  || loadArr[i] > '9')
+            {
+                loadArr[i]= getchar();
+                if (loadArr[i]=PICO_ERROR_TIMEOUT) break;
+            }
+        }
+        //convert to float
+        sscanf(preloadArr,"%f", &g_preload);
+        sscanf(loadArr,"%f", &g_load);
+        //relay back to PC
+        printf("PreLoad Set to: %.1f N,", g_preload);
+        printf("\n");
+        printf("Load Set to: %.1f N,", g_load);
+        printf("\n");
+
+        //Delay 2 seconds before starting 
+        sleep_ms(2000);
+        state = STATE_STARTING;
         break;
 
     default:
@@ -305,71 +352,22 @@ void command_handler(int ch)
     {
         case 's': // Start Test
         {
-            //temporarily stop the timer interupt while we get the data from the pc
-            cancel_repeating_timer(&get_commands_timer);
-
-            char preloadArr[6];
-            float preload;
-            char loadArr[6];
-            float load;
-
-            //need to wait for data to be sent
-            sleep_ms(1000);
-
-            //First get preload value
-            for (int i = 0; i < 6; i++)
-            {
-                preloadArr[i]= getchar();
-                //Getting garbage sometimes, only want number or period
-                while ((preloadArr[i] < '0' && preloadArr[i]!= '.') || preloadArr[i] > '9' )
-                {
-                    preloadArr[i]= getchar(); 
-                    if (preloadArr[i]=PICO_ERROR_TIMEOUT) break;
-                }
-            }
-
-            //Then get load value
-            for (int i = 0; i < 6; i++)
-            {
-                loadArr[i]= getchar();
-                //Getting garbage sometimes, only want number or period
-                while ((loadArr[i] < '0'&& loadArr[i]!= '.')  || loadArr[i] > '9')
-                {
-                    loadArr[i]= getchar();
-                    if (loadArr[i]=PICO_ERROR_TIMEOUT) break;
-                }
-            }
-
-            //convert to float
-            sscanf(preloadArr,"%f", &preload);
-            sscanf(loadArr,"%f", &load);
-            //relay back to PC
-            printf("PreLoad Set to: %.1f N,", preload);
-            printf("\n");
-            printf("Load Set to: %.1f N,", load);
-            printf("\n");
-
-            //Delay 2 seconds before starting 
-            sleep_ms(2000);
-            state = STATE_STARTING;
-            //restart get commands timer
-            add_repeating_timer_ms(50, get_command, NULL, &get_commands_timer);
+            state = STATE_PRE_TEST;
             break;
         }
 
-        case 'u': //Move motor up
+        case '+': //Move motor up
         {
             gpio_put(STEP_DIR_PIN, 1);
             pwm_set_enabled(STEP_PWM_SLICE, true);
             break;
         } 
-        case 'd': //Move motor down
+        case '-': //Move motor down
         {
             gpio_put(STEP_DIR_PIN, 0);
             pwm_set_enabled(STEP_PWM_SLICE, true);
             break;
         } 
-
         case 'x': //Stop Motor 
         {
             pwm_set_enabled(STEP_PWM_SLICE, false);
@@ -381,18 +379,23 @@ void command_handler(int ch)
             int speed = getchar_timeout_us(10000);
             if (speed!=PICO_ERROR_TIMEOUT)
             {
-                g_step_pwm_cycle_time = map(speed,90,50,1000,65535);
+                g_step_pwm_cycle_time = map(speed,90,50,1000,4000);
                 pwm_set_wrap(STEP_PWM_SLICE, g_step_pwm_cycle_time);
+                //printf("Speed Set to: %d \n,", g_step_pwm_cycle_time);
             }
             break;
         } 
         case 't': //tare linear encoder
         {
             g_zero_position_counts = quadrature_encoder_get_count(ENCODER_PIO, ENCODER_SM);
+            break;
         } 
-        case 'q': //Quit
+        case 'e': //Quit
         {
-            state = STATE_QUITTING;
+            pwm_set_enabled(STEP_PWM_SLICE, false);
+            state = STATE_IDLE;
+            printf("Quitting\n");
+            break;
         }
         default:
         {

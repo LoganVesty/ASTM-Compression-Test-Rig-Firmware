@@ -83,5 +83,4 @@ CMakeFiles/CompressionRigFirmware.dir/C_/VSARM/sdk/pico/pico-sdk/lib/tinyusb/src
  C:\VSARM\sdk\pico\pico-sdk\lib\tinyusb\src\device/usbd.h \
  C:\VSARM\sdk\pico\pico-sdk\lib\tinyusb\src\class/cdc/cdc_device.h \
  C:\VSARM\sdk\pico\pico-sdk\lib\tinyusb\src\class/cdc/cdc.h \
- C:\VSARM\sdk\pico\pico-sdk\lib\tinyusb\src\device/usbd_pvt.h \
- c:\vsarm\armcc\102021~1.10\arm-none-eabi\include\ctype.h
+ C:\VSARM\sdk\pico\pico-sdk\lib\tinyusb\src\device/usbd_pvt.h

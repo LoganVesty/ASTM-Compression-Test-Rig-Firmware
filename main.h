@@ -18,7 +18,7 @@ void state_machine();
 #define STEP_DIR_PIN 8
 #define STEP_EN_PIN 9
 #define STEP_PULSE_PWN_WIDTH 10 //The width of the pwm pulse, this will need to be updated if clock frequency is changed
-#define STEP_PULSE_PWM_CLKDIV 32 //The clock divider for the PWM, Higher value means longer overall cycle time.
+#define STEP_PULSE_PWM_CLKDIV 64 //The clock divider for the PWM, Higher value means longer overall cycle time.
 #define STEP_PWM_SLICE 3 //GPIO7 is PWM Slice 3
 #define STEP_PWM_CHANNEL 1 ////GPIO7 is PWM Channel B
 
@@ -29,16 +29,19 @@ void state_machine();
 #define PRELOAD_DELAY 10000
 #define LOAD_DELAY 2000
 
+#define TEST_SPEED 40000
+
 //Global Variable 
 extern char g_force_string[8];
 extern float g_force;
 extern int g_zero_position_counts;
 extern int g_step_pwm_cycle_time; //This will be varied for motor speed control
-extern double g_preload;
-extern double g_load;
+extern float g_preload;
+extern float g_load;
 extern uint32_t g_start_time_ms;
 extern uint32_t g_preload_start_time;
 extern uint32_t g_load_start_time;
+
 
 enum states {STATE_IDLE, 
             STATE_STARTING, 
@@ -47,7 +50,8 @@ enum states {STATE_IDLE,
             STATE_LOADING, 
             STATE_LOAD_DELAY, 
             STATE_FINISHING, 
-            STATE_QUITTING};
+            STATE_QUITTING,
+            STATE_PRE_TEST};
 extern enum states state;
 
 extern struct repeating_timer get_commands_timer;
