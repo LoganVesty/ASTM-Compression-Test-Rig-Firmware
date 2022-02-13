@@ -379,7 +379,7 @@ void command_handler(int ch)
             int speed = getchar_timeout_us(10000);
             if (speed!=PICO_ERROR_TIMEOUT)
             {
-                g_step_pwm_cycle_time = map(speed,90,50,1000,4000);
+                g_step_pwm_cycle_time = map(speed,90,50,MAX_SPEED,MIN_SPEED);
                 pwm_set_wrap(STEP_PWM_SLICE, g_step_pwm_cycle_time);
                 //printf("Speed Set to: %d \n,", g_step_pwm_cycle_time);
             }

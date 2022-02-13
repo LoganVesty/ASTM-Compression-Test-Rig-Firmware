@@ -29,7 +29,9 @@ void state_machine();
 #define PRELOAD_DELAY 10000
 #define LOAD_DELAY 2000
 
-#define TEST_SPEED 40000
+#define TEST_SPEED 40000  //value refers to pwm_wrap count value.
+#define MAX_SPEED 1000
+#define MIN_SPEED 10000
 
 //Global Variable 
 extern char g_force_string[8];
